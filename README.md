@@ -3,7 +3,7 @@
 ## Team
 - **Oskar Trzopek** – Graphics  
 - **Borys Kucharski** – Music, Game Designer  
-- **Stanislav Zyk** – Programmer  
+- **Stanislav Zyk** – Programmer, obviously better Game Designer  
 - **Polina Viktorova** – Graphics  
 
 ---
