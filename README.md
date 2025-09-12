@@ -49,7 +49,9 @@ The game takes place in a quirky secret agent world where **not everything goes 
 
 ## 🔗 Inspirations & References
 - *Hitman* series  
-- *One-Armed Robber*  
+- *One-Armed Robber*
+- *Hotline Miami*
+- *Metal Gear* series
 
 ---
 
