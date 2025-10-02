@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : InputController
 {
     private PlayerInputActions _inputActions;
-    private bool _isJumping;
+    private bool _isJumping, _isShooting;
 
     private void OnEnable() 
     {
@@ -13,6 +13,8 @@ public class PlayerController : InputController
         _inputActions.Player.Enable(); //that enables player action map
         _inputActions.Player.Jump.started += JumpStarted; //that's how you subscribe to events
         _inputActions.Player.Jump.canceled += JumpCanceled;
+        _inputActions.Player.Attack.started += AttackStarted;
+        _inputActions.Player.Attack.canceled += AttackCanceled;
     }
 
     private void OnDisable()
@@ -20,6 +22,8 @@ public class PlayerController : InputController
         _inputActions.Player.Disable();
         _inputActions.Player.Jump.started -= JumpStarted;
         _inputActions.Player.Jump.canceled -= JumpCanceled;
+        _inputActions.Player.Attack.started -= AttackStarted;
+        _inputActions.Player.Attack.canceled -= AttackCanceled;
         _inputActions = null;
     }
 
@@ -32,6 +36,17 @@ public class PlayerController : InputController
     {
         _isJumping = true;
     }
+
+    private void AttackCanceled(InputAction.CallbackContext action)
+    {
+        _isShooting = false;
+    }
+    
+    private void AttackStarted(InputAction.CallbackContext action)
+    {
+        _isShooting = true;
+    }
+
     
     public override Vector2 RetrieveMoveInput()
     {
@@ -41,5 +56,10 @@ public class PlayerController : InputController
     public override bool RetrieveJumpInput()
     {
         return _isJumping;
+    }
+
+    public override bool RetrieveWeaponInput()
+    {
+        return _isShooting;
     }
 }

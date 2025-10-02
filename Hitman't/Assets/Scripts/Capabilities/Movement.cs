@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using Unity.Netcode;
 
 [RequireComponent(typeof(Controls), typeof(CollisionDataRetriever))]
 public class Movement : MonoBehaviour
@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _maxSpeed = 7;  
     [SerializeField] private float _groundDragSpeed = 0.9f;
     [SerializeField] private float _forceMultiplier = 10f;
-    [SerializeField] private Transform _orientation; 
+    [SerializeField] private Transform _cameraTransform;
     private Rigidbody _rb;
     
     private Controls _controls;
@@ -22,12 +22,24 @@ public class Movement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _controls = GetComponent<Controls>();
         _collisionDataRetriever = GetComponent<CollisionDataRetriever>();
+        if (_cameraTransform == null && Camera.main != null)
+            _cameraTransform = Camera.main.transform;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     
     void Update()
     {
         _moveInput = _controls.input.RetrieveMoveInput();
-        _moveDirection = _orientation.forward * _moveInput.y + _orientation.right * _moveInput.x;
+        Vector3 camForward = _cameraTransform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+
+        Vector3 camRight = _cameraTransform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+
+        _moveDirection = camForward * _moveInput.y + camRight * _moveInput.x;
     }
 
     private void FixedUpdate()

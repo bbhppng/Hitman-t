@@ -10,7 +10,6 @@ public class Jump : MonoBehaviour
     private CollisionDataRetriever _collisionDataRetriever;
     private bool _jumpRequested;
     
-    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
